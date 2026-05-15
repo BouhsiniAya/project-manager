@@ -29,6 +29,12 @@
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
+                        <div>
+                            <label for="due_date" class="block text-sm font-medium text-slate-700 mb-2">Due Date</label>
+                            <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" class="block w-full rounded-xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-3 px-4 transition-colors">
+                            <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
+                        </div>
+
                         <div class="pt-4 flex items-center justify-end space-x-3 border-t border-slate-50">
                             <a href="{{ route('projects.index') }}" class="px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-800 hover:bg-slate-50 rounded-lg transition-colors">
                                 Cancel

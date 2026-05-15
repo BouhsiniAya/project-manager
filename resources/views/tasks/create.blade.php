@@ -63,6 +63,12 @@
                             </div>
 
                             <div>
+                                <label for="due_date" class="block text-sm font-medium text-slate-700 mb-2">Due Date</label>
+                                <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}" class="block w-full rounded-xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-3 px-4 transition-colors">
+                                <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
+                            </div>
+
+                            <div>
                                 <label for="file" class="block text-sm font-medium text-slate-700 mb-2">Attachment (Optional)</label>
                                 <input type="file" name="file" id="file" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors border border-slate-200 rounded-xl">
                                 <x-input-error :messages="$errors->get('file')" class="mt-2" />

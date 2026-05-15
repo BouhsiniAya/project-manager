@@ -27,9 +27,15 @@
                         <h3 class="text-xl font-bold text-[#172B4D] line-clamp-1 group-hover:text-blue-600 transition-colors">{{ $project->name }}</h3>
                         <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full whitespace-nowrap">{{ $project->tasks->count() }} Tasks</span>
                     </div>
-                    <p class="text-gray-500 text-sm mb-6 flex-grow line-clamp-3">
+                    <p class="text-gray-500 text-sm mb-4 flex-grow line-clamp-3">
                         {{ $project->description ?: 'No description provided.' }}
                     </p>
+                    @if($project->due_date)
+                        <div class="mb-4 text-xs font-medium {{ \Carbon\Carbon::parse($project->due_date)->isPast() ? 'text-red-500' : 'text-gray-500' }} flex items-center">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Due: {{ \Carbon\Carbon::parse($project->due_date)->format('M d, Y') }}
+                        </div>
+                    @endif
                     <div class="flex items-center justify-between border-t border-gray-100 pt-4 mt-auto">
                         <div class="flex items-center">
                             <div class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs mr-3">

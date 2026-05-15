@@ -9,7 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'user_id', 'status'];
+    protected $fillable = ['name', 'description', 'user_id', 'status', 'due_date'];
+
+    protected $casts = [
+        'due_date' => 'date',
+    ];
 
     public function manager()
     {

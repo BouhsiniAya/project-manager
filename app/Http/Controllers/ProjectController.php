@@ -32,6 +32,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:pending,in_progress,completed',
+            'due_date' => 'nullable|date',
         ]);
 
         $validated['user_id'] = auth()->id();
@@ -57,6 +58,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:pending,in_progress,completed',
+            'due_date' => 'nullable|date',
         ]);
 
         $project->update($validated);

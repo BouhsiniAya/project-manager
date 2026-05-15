@@ -60,14 +60,51 @@
             </div>
         </div>
 
-        <!-- Help / Settings -->
-        <a href="{{ route('profile.edit') }}" class="p-1.5 text-gray-300 hover:text-white hover:bg-[#263959] rounded-full transition-colors block" title="Settings">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        </a>
+        <!-- Profile Dropdown -->
+        <div class="relative" x-data="{ open: false }" @click.away="open = false">
+            <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none group">
+                <div class="hidden md:flex flex-col items-end leading-tight">
+                    @if(Auth::user()->role === 'admin')
+                        <span class="text-xs font-bold bg-purple-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">Admin</span>
+                    @else
+                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">Member</span>
+                    @endif
+                </div>
+                
+                @if(Auth::user()->avatar_url)
+                    <img src="{{ Auth::user()->avatar_url }}" alt="Profile" class="h-10 w-10 shrink-0 rounded-full object-cover border-2 border-[#263959] group-hover:border-blue-400 transition-all shadow-sm">
+                @else
+                    <div class="h-10 w-10 shrink-0 rounded-full bg-white border-2 border-[#263959] group-hover:border-blue-400 text-gray-400 flex items-center justify-center transition-all shadow-sm overflow-hidden">
+                        <svg class="h-full w-full" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </div>
+                @endif
+            </button>
 
-        <!-- Profile -->
-        <div class="h-8 w-8 rounded-full bg-[#0052CC] border border-[#0065FF] text-white flex items-center justify-center font-bold text-sm cursor-pointer hover:ring-2 hover:ring-blue-300 transition-all shadow-sm" onclick="document.getElementById('logout-form').submit();" title="Logout">
-            {{ substr(Auth::user()->name, 0, 1) }}
+            <!-- Dropdown Menu -->
+            <div x-show="open" style="display: none;" class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 border border-gray-200 z-50">
+                <div class="px-4 py-4 border-b border-gray-100 flex flex-col items-center justify-center text-center">
+                    @if(Auth::user()->avatar_url)
+                        <img src="{{ Auth::user()->avatar_url }}" alt="Profile" class="h-16 w-16 shrink-0 rounded-full object-cover shadow-sm mb-3">
+                    @else
+                        <div class="h-16 w-16 shrink-0 rounded-full bg-white text-gray-400 flex items-center justify-center shadow-sm mb-3 overflow-hidden">
+                            <svg class="h-full w-full" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        </div>
+                    @endif
+                    <p class="text-sm font-bold text-[#172B4D]">{{ Auth::user()->name }}</p>
+                    <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                </div>
+                
+                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 mt-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Settings & Profile
+                </a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Log Out
+                </a>
+            </div>
         </div>
         <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
             @csrf

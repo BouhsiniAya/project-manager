@@ -56,7 +56,13 @@
                             <div class="flex items-center justify-between mt-4">
                                 <div class="flex items-center space-x-2">
                                     <span class="text-xs font-medium text-gray-500">TSK-{{ $task->id }}</span>
-                                    <span class="text-xs text-gray-400 truncate max-w-[100px]">{{ $task->project->name }}</span>
+                                    <span class="text-xs text-gray-400 truncate max-w-[80px]">{{ $task->project->name }}</span>
+                                    @if($task->due_date)
+                                        <span class="text-xs {{ \Carbon\Carbon::parse($task->due_date)->isPast() ? 'text-red-500' : 'text-gray-400' }} flex items-center" title="Due Date">
+                                            <svg class="w-3 h-3 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            {{ \Carbon\Carbon::parse($task->due_date)->format('M d') }}
+                                        </span>
+                                    @endif
                                 </div>
                                 @if($task->assignee)
                                     <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold" title="{{ $task->assignee->name }}">

@@ -61,6 +61,12 @@
                                 </select>
                                 <x-input-error :messages="$errors->get('status')" class="mt-2" />
                             </div>
+
+                            <div>
+                                <label for="due_date" class="block text-sm font-medium text-slate-700 mb-2">Due Date</label>
+                                <input type="date" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date ? $task->due_date->format('Y-m-d') : '') }}" class="block w-full rounded-xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-3 px-4 transition-colors">
+                                <x-input-error :messages="$errors->get('due_date')" class="mt-2" />
+                            </div>
                         </div>
 
                         <div class="pt-6 flex items-center justify-end space-x-3 border-t border-slate-50 mt-8">

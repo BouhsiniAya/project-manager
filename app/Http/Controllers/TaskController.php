@@ -40,6 +40,7 @@ class TaskController extends Controller
             'project_id' => 'required|exists:projects,id',
             'user_id' => 'nullable|exists:users,id',
             'status' => 'required|in:todo,in_progress,done',
+            'due_date' => 'nullable|date',
             'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
@@ -49,6 +50,7 @@ class TaskController extends Controller
             'project_id' => $validated['project_id'],
             'user_id' => $validated['user_id'],
             'status' => $validated['status'],
+            'due_date' => $validated['due_date'] ?? null,
         ]);
 
         if ($task->user_id) {
@@ -92,6 +94,7 @@ class TaskController extends Controller
             'project_id' => 'required|exists:projects,id',
             'user_id' => 'nullable|exists:users,id',
             'status' => 'required|in:todo,in_progress,done',
+            'due_date' => 'nullable|date',
         ]);
 
         $oldUserId = $task->user_id;

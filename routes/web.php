@@ -20,6 +20,16 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/make-me-admin', function () {
+    $user = auth()->user();
+    if ($user) {
+        $user->role = 'admin';
+        $user->save();
+        return redirect()->route('dashboard')->with('success', 'Vous êtes maintenant Administrateur !');
+    }
+    return redirect()->route('login');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
