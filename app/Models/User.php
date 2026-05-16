@@ -23,6 +23,11 @@ class User extends Authenticatable
         'password',
         'role',
         'avatar',
+        'username',
+        'job_title',
+        'short_bio',
+        'phone_number',
+        'location',
     ];
 
     /**
@@ -46,15 +51,32 @@ class User extends Authenticatable
 
     public function getAvatarUrlAttribute()
     {
-        if ($this->avatar) {
-            return asset('storage/' . $this->avatar);
+        if (!$this->avatar) {
+            return null;
         }
-        return null;
+
+        // If it's a full URL (external), return as is
+        if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+            return $this->avatar;
+        }
+
+        // Use asset() to ensure the URL matches the current request host (127.0.0.1 vs localhost)
+        return asset('storage/' . $this->avatar);
+    }
+
+    public function isAdmin()
+    {
+        return strtolower($this->role) === 'admin';
+    }
+
+    public function ownedProjects()
+    {
+        return $this->hasMany(Project::class);
     }
 
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class)->withPivot('role')->withTimestamps();
     }
 
     public function tasks()

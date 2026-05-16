@@ -5,7 +5,7 @@
                 <nav class="text-sm font-medium text-gray-500 mb-2">
                     <ol class="list-none p-0 inline-flex">
                         <li class="flex items-center">
-                            <a href="{{ route('projects.index') }}" class="hover:underline">Projects</a>
+                            <a href="{{ route('projects.index') }}" class="hover:underline">{{ __('Projects') }}</a>
                             <svg class="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                         </li>
                         <li class="flex items-center">
@@ -24,15 +24,15 @@
             <div class="flex space-x-3">
                 <a href="{{ route('tasks.edit', $task) }}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#172B4D] text-sm font-medium rounded-md transition-colors flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    Edit
+                    {{ __('Edit') }}
                 </a>
-                @if(auth()->user()->role === 'admin')
-                <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?');">
+                @if(auth()->user()->isAdmin())
+                <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure you want to delete this task?') }}');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-sm font-medium rounded-md transition-colors flex items-center">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                        Delete
+                        {{ __('Delete') }}
                     </button>
                 </form>
                 @endif
@@ -47,16 +47,16 @@
             
             <!-- Description Box -->
             <div>
-                <h3 class="text-lg font-semibold text-[#172B4D] mb-4">Description</h3>
+                <h3 class="text-lg font-semibold text-[#172B4D] mb-4">{{ __('Description') }}</h3>
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                    <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">{{ $task->description ?: 'No description provided.' }}</p>
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">{{ $task->description ?: __('No description provided.') }}</p>
                 </div>
             </div>
             
             <!-- Attachments Box -->
             @if($task->files->count() > 0)
                 <div>
-                    <h3 class="text-lg font-semibold text-[#172B4D] mb-4">Attachments</h3>
+                    <h3 class="text-lg font-semibold text-[#172B4D] mb-4">{{ __('Attachments') }}</h3>
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                         <ul class="space-y-3">
                             @foreach($task->files as $file)
@@ -78,7 +78,7 @@
 
             <!-- Activity / Comments -->
             <div>
-                <h3 class="text-lg font-semibold text-[#172B4D] mb-4">Activity</h3>
+                <h3 class="text-lg font-semibold text-[#172B4D] mb-4">{{ __('Activity') }}</h3>
                 <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                     
                     <div class="mb-8 border-b border-gray-100 pb-6">
@@ -90,10 +90,10 @@
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <textarea name="content" rows="3" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none" placeholder="Add a comment..." required></textarea>
+                                <textarea name="content" rows="3" class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm resize-none" placeholder="{{ __('Add a comment...') }}" required></textarea>
                                 <div class="mt-3 flex justify-end">
                                     <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors">
-                                        Save
+                                        {{ __('Save') }}
                                     </button>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-sm text-gray-500 italic text-center py-4">No activity yet on this task.</p>
+                            <p class="text-sm text-gray-500 italic text-center py-4">{{ __('No activity yet on this task.') }}</p>
                         @endforelse
                     </div>
 
@@ -132,25 +132,25 @@
             
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                 <div class="flex justify-between items-center mb-6">
-                    <h4 class="font-semibold text-[#172B4D]">Details</h4>
+                    <h4 class="font-semibold text-[#172B4D]">{{ __('Details') }}</h4>
                 </div>
                 
                 <div class="space-y-4">
                     <div class="flex items-center">
-                        <span class="w-32 text-sm text-gray-500">Status</span>
+                        <span class="w-32 text-sm text-gray-500">{{ __('Status') }}</span>
                         <div class="flex-1">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-bold uppercase tracking-wider
                                 {{ $task->status === 'todo' ? 'bg-gray-100 text-gray-700' : '' }}
                                 {{ $task->status === 'in_progress' ? 'bg-blue-100 text-blue-700' : '' }}
                                 {{ $task->status === 'done' ? 'bg-green-100 text-green-700' : '' }}
                             ">
-                                {{ str_replace('_', ' ', $task->status) }}
+                                {{ __(str_replace('_', ' ', $task->status)) }}
                             </span>
                         </div>
                     </div>
 
                     <div class="flex items-center">
-                        <span class="w-32 text-sm text-gray-500">Assignee</span>
+                        <span class="w-32 text-sm text-gray-500">{{ __('Assignee') }}</span>
                         <div class="flex-1 flex items-center">
                             @if($task->assignee)
                                 <div class="h-6 w-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs mr-2">
@@ -158,13 +158,13 @@
                                 </div>
                                 <span class="text-sm text-[#172B4D]">{{ $task->assignee->name }}</span>
                             @else
-                                <span class="text-sm text-gray-500 italic">Unassigned</span>
+                                <span class="text-sm text-gray-500 italic">{{ __('Unassigned') }}</span>
                             @endif
                         </div>
                     </div>
 
                     <div class="flex items-center">
-                        <span class="w-32 text-sm text-gray-500">Reporter</span>
+                        <span class="w-32 text-sm text-gray-500">{{ __('Reporter') }}</span>
                         <div class="flex-1 flex items-center">
                             <span class="text-sm text-[#172B4D]">{{ $task->project->manager->name ?? 'System' }}</span>
                         </div>
@@ -173,14 +173,14 @@
             </div>
 
             <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                <h4 class="font-semibold text-[#172B4D] mb-4">Dates</h4>
+                <h4 class="font-semibold text-[#172B4D] mb-4">{{ __('Dates') }}</h4>
                 <div class="space-y-4">
                     <div class="flex items-center">
-                        <span class="w-32 text-sm text-gray-500">Created</span>
+                        <span class="w-32 text-sm text-gray-500">{{ __('Created') }}</span>
                         <span class="flex-1 text-sm text-[#172B4D]">{{ $task->created_at->format('M d, Y g:i A') }}</span>
                     </div>
                     <div class="flex items-center">
-                        <span class="w-32 text-sm text-gray-500">Updated</span>
+                        <span class="w-32 text-sm text-gray-500">{{ __('Updated') }}</span>
                         <span class="flex-1 text-sm text-[#172B4D]">{{ $task->updated_at->diffForHumans() }}</span>
                     </div>
                 </div>

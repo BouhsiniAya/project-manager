@@ -5,24 +5,35 @@
                 <nav class="text-sm font-medium text-gray-500 mb-2">
                     <ol class="list-none p-0 inline-flex">
                         <li class="flex items-center">
-                            <span class="text-gray-800">My Tasks</span>
+                            <span class="text-gray-800">{{ __('My Tasks') }}</span>
                         </li>
                     </ol>
                 </nav>
                 <h2 class="font-bold text-3xl text-[#172B4D] leading-tight">
-                    Your Work
+                    {{ __('Your Work') }}
                 </h2>
             </div>
             <div class="flex items-center space-x-4">
-                <form action="{{ route('tasks.index') }}" method="GET" class="relative">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search tasks..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <form action="{{ route('tasks.index') }}" method="GET" class="flex items-center space-x-2">
+                    <select name="project_id" onchange="this.form.submit()" class="border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 py-2 pl-3 pr-8">
+                        <option value="">{{ __('All Projects') }}</option>
+                        @foreach($projects as $project)
+                            <option value="{{ $project->id }}" {{ request('project_id') == $project->id ? 'selected' : '' }}>
+                                {{ $project->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('Search tasks...') }}" class="pl-10 pr-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
                     </div>
                 </form>
                 <a href="{{ route('tasks.create') }}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    Create Task
+                    {{ __('Create Task') }}
                 </a>
             </div>
         </div>
@@ -31,9 +42,9 @@
     <div class="flex flex-col lg:flex-row gap-6 overflow-x-auto pb-4 h-full mt-6">
         @php
             $statuses = [
-                'todo' => ['title' => 'TO DO', 'bg' => 'bg-gray-100', 'border' => 'border-gray-200'],
-                'in_progress' => ['title' => 'IN PROGRESS', 'bg' => 'bg-blue-50', 'border' => 'border-blue-100'],
-                'done' => ['title' => 'DONE', 'bg' => 'bg-green-50', 'border' => 'border-green-100'],
+                'todo' => ['title' => __('TO DO'), 'bg' => 'bg-gray-100', 'border' => 'border-gray-200'],
+                'in_progress' => ['title' => __('IN PROGRESS'), 'bg' => 'bg-blue-50', 'border' => 'border-blue-100'],
+                'done' => ['title' => __('DONE'), 'bg' => 'bg-green-50', 'border' => 'border-green-100'],
             ];
             // Since $tasks is paginated, we group the current page items
             $groupedTasks = collect($tasks->items())->groupBy('status');
@@ -69,7 +80,7 @@
                                         {{ substr($task->assignee->name, 0, 1) }}
                                     </div>
                                 @else
-                                    <div class="w-6 h-6 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xs" title="Unassigned">
+                                    <div class="w-6 h-6 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center text-xs" title="{{ __('Unassigned') }}">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                                     </div>
                                 @endif
@@ -77,7 +88,7 @@
                         </a>
                     @empty
                         <div class="p-4 rounded-lg border-2 border-dashed border-gray-300 text-center text-gray-400 text-sm">
-                            No tasks
+                            {{ __('No tasks') }}
                         </div>
                     @endforelse
                 </div>

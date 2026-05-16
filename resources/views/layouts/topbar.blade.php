@@ -8,11 +8,11 @@
 
         <!-- Main Nav Items (Jira style) -->
         <div class="hidden md:flex space-x-1 text-sm font-medium">
-            <a href="{{ route('dashboard') }}" class="px-3 py-1.5 {{ request()->routeIs('dashboard') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">Dashboard</a>
-            <a href="{{ route('projects.index') }}" class="px-3 py-1.5 {{ request()->routeIs('projects.*') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">Projects</a>
-            <a href="{{ route('tasks.index') }}" class="px-3 py-1.5 {{ request()->routeIs('tasks.*') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">Filters & Issues</a>
+            <a href="{{ route('dashboard') }}" class="px-3 py-1.5 {{ request()->routeIs('dashboard') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">{{ __('Dashboard') }}</a>
+            <a href="{{ route('projects.index') }}" class="px-3 py-1.5 {{ request()->routeIs('projects.*') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">{{ __('Projects') }}</a>
+            <a href="{{ route('tasks.index') }}" class="px-3 py-1.5 {{ request()->routeIs('tasks.*') ? 'bg-[#263959] text-blue-300' : 'text-gray-200 hover:bg-[#263959] hover:text-white' }} rounded-sm transition-colors">{{ __('My Tasks') }}</a>
             <a href="{{ route('tasks.create') }}" class="ml-4 px-4 py-1.5 bg-[#0052CC] hover:bg-[#0065FF] text-white font-medium rounded-sm shadow-sm transition-colors flex items-center">
-                Create
+                {{ __('Create') }}
             </a>
         </div>
     </div>
@@ -23,7 +23,19 @@
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
-            <input type="text" placeholder="Search..." class="bg-[#263959] border border-transparent text-sm text-white rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-48 pl-10 py-1.5 placeholder-gray-400 focus:bg-white focus:text-gray-900 transition-all">
+            <input type="text" placeholder="{{ __('Search...') }}" class="bg-[#263959] border border-transparent text-sm text-white rounded-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent block w-48 pl-10 py-1.5 placeholder-gray-400 focus:bg-white focus:text-gray-900 transition-all">
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="relative" x-data="{ open: false }" @click.away="open = false">
+            <button @click="open = !open" class="flex items-center space-x-1 text-gray-300 hover:text-white px-2 py-1 rounded transition-colors focus:outline-none">
+                <span class="text-sm font-medium uppercase">{{ app()->getLocale() }}</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            <div x-show="open" style="display: none;" class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg py-1 border border-gray-200 z-50">
+                <a href="{{ route('lang.switch', 'en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors {{ app()->getLocale() == 'en' ? 'font-bold' : '' }}">EN</a>
+                <a href="{{ route('lang.switch', 'fr') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors {{ app()->getLocale() == 'fr' ? 'font-bold' : '' }}">FR</a>
+            </div>
         </div>
 
         <!-- Notification Bell -->
@@ -38,9 +50,9 @@
             <!-- Dropdown -->
             <div x-show="open" style="display: none;" class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 border border-gray-200 z-50">
                 <div class="px-4 py-2 border-b border-gray-100 flex justify-between items-center">
-                    <span class="text-sm font-bold text-gray-700">Notifications</span>
+                    <span class="text-sm font-bold text-gray-700">{{ __('Notifications') }}</span>
                     @if(Auth::check() && Auth::user()->unreadNotifications->count() > 0)
-                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">{{ Auth::user()->unreadNotifications->count() }} new</span>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">{{ Auth::user()->unreadNotifications->count() }} {{ __('new') }}</span>
                     @endif
                 </div>
                 <div class="max-h-64 overflow-y-auto">
@@ -53,7 +65,7 @@
                         @endforeach
                     @else
                         <div class="px-4 py-6 text-center text-gray-500 text-sm">
-                            No new notifications
+                            {{ __('No new notifications') }}
                         </div>
                     @endif
                 </div>
@@ -64,10 +76,10 @@
         <div class="relative" x-data="{ open: false }" @click.away="open = false">
             <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none group">
                 <div class="hidden md:flex flex-col items-end leading-tight">
-                    @if(Auth::user()->role === 'admin')
-                        <span class="text-xs font-bold bg-purple-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">Admin</span>
+                    @if(Auth::user()->isAdmin())
+                        <span class="text-xs font-bold bg-purple-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">{{ __('Admin') }}</span>
                     @else
-                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">Member</span>
+                        <span class="text-xs font-bold bg-blue-500 text-white px-2 py-1 rounded-full uppercase tracking-wider shadow-sm">{{ __('Member') }}</span>
                     @endif
                 </div>
                 
@@ -98,11 +110,11 @@
                 
                 <a href="{{ route('profile.edit') }}" class="block px-4 py-2 mt-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors flex items-center">
                     <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Settings & Profile
+                    {{ __('Settings & Profile') }}
                 </a>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center">
                     <svg class="w-4 h-4 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    Log Out
+                    {{ __('Log Out') }}
                 </a>
             </div>
         </div>

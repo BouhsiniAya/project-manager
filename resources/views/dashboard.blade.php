@@ -10,8 +10,8 @@
 
     <div class="max-w-7xl mx-auto">
         <div class="mb-6">
-            <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300 mb-2">Welcome back, {{ Auth::user()->name }}! 👋</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Here's what's happening with your projects today.</p>
+            <h3 class="text-lg font-medium text-gray-600 dark:text-gray-300 mb-2">{{ __('Welcome back') }}, {{ Auth::user()->name }}! 👋</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __("Here's what's happening with your projects today.") }}</p>
         </div>
         
         <!-- KPI Cards Grid -->
@@ -20,7 +20,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Projects</p>
+                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Projects') }}</p>
                         <p class="text-3xl font-extrabold text-[#172B4D] dark:text-white mt-1">{{ $totalProjects }}</p>
                     </div>
                     <div class="p-3 bg-blue-50 text-blue-600 rounded-lg dark:bg-blue-900/30 dark:text-blue-400">
@@ -33,7 +33,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">In Progress Projects</p>
+                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('In Progress Projects') }}</p>
                         <p class="text-3xl font-extrabold text-[#172B4D] dark:text-white mt-1">{{ $inProgressProjects }}</p>
                     </div>
                     <div class="p-3 bg-yellow-50 text-yellow-600 rounded-lg dark:bg-yellow-900/30 dark:text-yellow-400">
@@ -46,7 +46,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Completed Projects</p>
+                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Completed Projects') }}</p>
                         <p class="text-3xl font-extrabold text-[#172B4D] dark:text-white mt-1">{{ $completedProjects }}</p>
                     </div>
                     <div class="p-3 bg-green-50 text-green-600 rounded-lg dark:bg-green-900/30 dark:text-green-400">
@@ -59,7 +59,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pending Tasks</p>
+                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Pending Tasks') }}</p>
                         <p class="text-3xl font-extrabold text-[#172B4D] dark:text-white mt-1">{{ $pendingTasks }}</p>
                     </div>
                     <div class="p-3 bg-red-50 text-red-600 rounded-lg dark:bg-red-900/30 dark:text-red-400">
@@ -73,7 +73,7 @@
                 <div class="flex items-center justify-between">
                     <div class="w-full">
                         <div class="flex justify-between items-center mb-1">
-                            <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Task Completion</p>
+                            <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Task Completion') }}</p>
                             <span class="text-sm font-bold text-blue-600 dark:text-blue-400">{{ $progressPercentage }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-3">
@@ -87,7 +87,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Active Users</p>
+                        <p class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Active Users') }}</p>
                         <p class="text-3xl font-extrabold text-[#172B4D] dark:text-white mt-1">{{ $activeUsers }}</p>
                     </div>
                     <div class="p-3 bg-purple-50 text-purple-600 rounded-lg dark:bg-purple-900/30 dark:text-purple-400">
@@ -101,7 +101,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             <!-- Project Evolution Bar Chart -->
             <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-                <h4 class="text-sm font-bold text-[#172B4D] dark:text-white uppercase tracking-wider mb-4">Project Evolution</h4>
+                <h4 class="text-sm font-bold text-[#172B4D] dark:text-white uppercase tracking-wider mb-4">{{ __('Project Evolution') }}</h4>
                 <div class="relative h-64">
                     <canvas id="projectEvolutionChart"></canvas>
                 </div>
@@ -109,7 +109,7 @@
 
             <!-- Task Status Pie Chart -->
             <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-                <h4 class="text-sm font-bold text-[#172B4D] dark:text-white uppercase tracking-wider mb-4">Task Status Distribution</h4>
+                <h4 class="text-sm font-bold text-[#172B4D] dark:text-white uppercase tracking-wider mb-4">{{ __('Task Status Distribution') }}</h4>
                 <div class="relative h-64 flex justify-center">
                     <canvas id="taskStatusChart"></canvas>
                 </div>
@@ -131,7 +131,7 @@
                     data: {
                         labels: {!! json_encode($months) !!},
                         datasets: [{
-                            label: 'New Projects',
+                            label: '{{ __('New Projects') }}',
                             data: {!! json_encode($projectEvolution) !!},
                             backgroundColor: '#0052CC',
                             borderRadius: 4,
@@ -162,7 +162,7 @@
                 new Chart(ctxPie, {
                     type: 'doughnut',
                     data: {
-                        labels: ['To Do', 'In Progress', 'Done'],
+                        labels: ['{{ __('To Do') }}', '{{ __('In Progress') }}', '{{ __('Done') }}'],
                         datasets: [{
                             data: [{{ $taskStats['todo'] }}, {{ $taskStats['in_progress'] }}, {{ $taskStats['done'] }}],
                             backgroundColor: ['#DFE1E6', '#0052CC', '#36B37E'],

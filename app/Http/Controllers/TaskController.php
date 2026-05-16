@@ -16,13 +16,25 @@ class TaskController extends Controller
     {
         $query = Task::with('project', 'assignee');
 
-        if ($request->has('search') && $request->search != '') {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        if (auth()->check() && auth()->user()->role !== 'admin') {
+            $query->where('user_id', auth()->id());
         }
 
-        $tasks = $query->paginate(10)->withQueryString();
-        return view('tasks.index', compact('tasks'));
+        if ($request->has('project_id') && $request->project_id != '') {
+            $query->where('project_id', $request->project_id);
+        }
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $tasks = $query->orderBy('project_id')->paginate(20)->withQueryString();
+        $projects = Project::all();
+
+        return view('tasks.index', compact('tasks', 'projects'));
     }
 
     public function create()
